@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Donut Polygon Survey</name>
+    <Placemark>
+      <name>Courtyard Complex</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -73.9800,40.7500,0
+              -73.9700,40.7500,0
+              -73.9700,40.7600,0
+              -73.9800,40.7600,0
+              -73.9800,40.7500,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+        <innerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -73.9770,40.7530,0
+              -73.9730,40.7530,0
+              -73.9730,40.7570,0
+              -73.9770,40.7570,0
+              -73.9770,40.7530,0
+            </coordinates>
+          </LinearRing>
+        </innerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Manhattan Survey</name>
+    <description>Sample geospatial survey dataset containing polygons, lines, and points.</description>
+    
+    <!-- Feature 1: Polygon (Bryant Park) -->
+    <Placemark>
+      <name>Bryant Park</name>
+      <description>Public park located in Midtown Manhattan</description>
+      <ExtendedData>
+        <Data name="type"><value>Park</value></Data>
+        <Data name="established"><value>1847</value></Data>
+      </ExtendedData>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              -73.9835,40.7538,0
+              -73.9818,40.7548,0
+              -73.9828,40.7558,0
+              -73.9845,40.7547,0
+              -73.9835,40.7538,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+
+    <!-- Feature 2: LineString (High Line) -->
+    <Placemark>
+      <name>High Line Trail</name>
+      <description>Elevated linear park trail</description>
+      <ExtendedData>
+        <Data name="surface"><value>Paved</value></Data>
+      </ExtendedData>
+      <LineString>
+        <coordinates>
+          -74.0078,40.7395,0
+          -74.0065,40.7420,0
+          -74.0048,40.7460,0
+          -74.0020,40.7510,0
+        </coordinates>
+      </LineString>
+    </Placemark>
+
+    <!-- Feature 3: Point (Empire State Building) -->
+    <Placemark>
+      <name>Empire State Building</name>
+      <description>102-story Art Deco skyscraper</description>
+      <Point>
+        <coordinates>-73.985656,40.748441,381</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
