@@ -10,12 +10,9 @@ from app.core.exceptions import CRSError
 
 class CRSTransformerService:
     """
-    Intelligent CRS handler and coordinate transformation service.
-    
-    Ensures that geographic coordinates (degrees) are NEVER used directly for
-    Euclidean distance or area calculations. Automatically determines and projects
-    geometries to an optimal projected coordinate system (such as local UTM Zone
-    or Equal-Area projection).
+    Handles CRS detection and coordinate transformations.
+    Converts coordinates from geographic (degrees like EPSG:4326) to an appropriate
+    projected CRS (like UTM) so that area and length can be accurately measured in meters.
     """
 
     @staticmethod

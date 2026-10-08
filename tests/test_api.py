@@ -190,3 +190,15 @@ def test_delete_file(client, sample_polygons_zip):
     # Ensure it no longer exists
     get_res = client.get(f"/api/files/{file_id}/")
     assert get_res.status_code == 404
+
+
+def test_get_db_generator():
+    from app.models.database import get_db
+    gen = get_db()
+    db = next(gen)
+    assert db is not None
+    try:
+        next(gen)
+    except StopIteration:
+        pass
+

@@ -78,3 +78,50 @@ def test_incomplete_shapefile_zip_error():
 def test_unsupported_file_extension():
     with pytest.raises(FileProcessingError, match="Unsupported file format"):
         GeospatialParserService.parse_file("data.csv", b"a,b,c\n1,2,3")
+
+
+def test_kml_multigeometry_parsing():
+    kml_str = """<?xml version="1.0" encoding="UTF-8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2">
+      <Document>
+        <Placemark>
+          <name>Multi Poly</name>
+          <MultiGeometry>
+            <Polygon>
+              <outerBoundaryIs><LinearRing><coordinates>0,0,0 1,0,0 1,1,0 0,1,0 0,0,0</coordinates></LinearRing></outerBoundaryIs>
+            </Polygon>
+            <Polygon>
+              <outerBoundaryIs><LinearRing><coordinates>2,2,0 3,2,0 3,3,0 2,3,0 2,2,0</coordinates></LinearRing></outerBoundaryIs>
+            </Polygon>
+          </MultiGeometry>
+        </Placemark>
+        <Placemark>
+          <name>Multi Line</name>
+          <MultiGeometry>
+            <LineString><coordinates>0,0,0 1,1,0</coordinates></LineString>
+            <LineString><coordinates>2,2,0 3,3,0</coordinates></LineString>
+          </MultiGeometry>
+        </Placemark>
+      </Document>
+    </kml>"""
+    features, crs, ftype = GeospatialParserService.parse_file("multi.kml", kml_str.encode("utf-8"))
+    assert len(features) == 2
+    assert features[0].geometry_type == "MultiPolygon"
+    assert features[1].geometry_type == "MultiLineString"
+
+
+def test_kmz_archive_parsing():
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as zf:
+        zf.writestr("doc.kml", """<?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+          <Placemark>
+            <name>Test KMZ Point</name>
+            <Point><coordinates>10,20,0</coordinates></Point>
+          </Placemark>
+        </kml>""")
+    features, crs, ftype = GeospatialParserService.parse_file("test.kmz.zip", buf.getvalue())
+    assert ftype == "kml"
+    assert len(features) == 1
+    assert features[0].geometry_type == "Point"
+

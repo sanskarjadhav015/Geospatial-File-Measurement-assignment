@@ -1,5 +1,5 @@
 import pytest
-from shapely.geometry import Polygon, MultiPolygon, LineString, Point, GeometryCollection
+from shapely.geometry import Polygon, MultiPolygon, LineString, MultiLineString, Point, GeometryCollection
 from app.services.measurement_service import MeasurementService
 
 
@@ -106,3 +106,20 @@ def test_calculate_file_summary():
     assert summary["total_length_meters"] == 500.0
     assert summary["points_count"] == 1
     assert summary["unsupported_count"] == 1
+
+
+def test_multipolygon_and_multilinestring_measurements():
+    poly1 = Polygon([(0, 0), (1, 0), (1, 1), (0, 1), (0, 0)])
+    poly2 = Polygon([(2, 2), (3, 2), (3, 3), (2, 3), (2, 2)])
+    mp = MultiPolygon([poly1, poly2])
+    meas, crs, desc, status, _ = MeasurementService.process_feature_measurement(mp, "EPSG:4326")
+    assert status == "MEASURED"
+    assert meas["area_sq_meters"] > 0
+
+    l1 = LineString([(0, 0), (1, 1)])
+    l2 = LineString([(2, 2), (3, 3)])
+    ml = MultiLineString([l1, l2])
+    meas_l, crs_l, desc_l, status_l, _ = MeasurementService.process_feature_measurement(ml, "EPSG:4326")
+    assert status_l == "MEASURED"
+    assert meas_l["length_meters"] > 0
+

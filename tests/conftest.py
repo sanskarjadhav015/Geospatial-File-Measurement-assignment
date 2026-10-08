@@ -7,10 +7,16 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.main import app
+from app.config import settings
 from app.models.database import Base, get_db
 
 TEST_DIR = Path(__file__).resolve().parent
 SAMPLE_DIR = TEST_DIR.parent / "sample_data"
+
+
+@pytest.fixture(autouse=True)
+def temp_upload_dir(tmp_path, monkeypatch):
+    monkeypatch.setattr(settings, "UPLOAD_DIR", tmp_path)
 
 # In-memory SQLite with StaticPool so all connections share the same database
 TEST_DATABASE_URL = "sqlite:///:memory:"

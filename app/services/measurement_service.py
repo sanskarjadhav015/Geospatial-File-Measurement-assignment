@@ -7,12 +7,9 @@ from app.core.crs_transformer import CRSTransformerService
 
 class MeasurementService:
     """
-    High-precision measurement calculation service.
-    
-    Adheres strictly to the requirement that geographic coordinates (degrees)
-    are NEVER measured with Euclidean calculations. Automatically transforms
-    geometries to an optimal projected CRS before computing planar area or length,
-    and provides WGS84 geodesic metrics via pyproj.Geod for cross-validation.
+    Calculates geometric measurements (area for polygons, length for linestrings).
+    Projects coordinates to UTM or equal-area projection so results are in metric units,
+    and also computes geodesic area for verification.
     """
 
     SUPPORTED_AREA_TYPES = {"Polygon", "MultiPolygon"}

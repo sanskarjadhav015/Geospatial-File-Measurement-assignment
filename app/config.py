@@ -6,9 +6,8 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api"
     DESCRIPTION: str = (
-        "Production-grade backend service for processing geospatial files "
-        "(Shapefiles and KML) and calculating high-precision geometric measurements "
-        "with intelligent CRS reprojection."
+        "FastAPI service to upload geospatial files (Shapefile and KML) "
+        "and calculate area and length measurements with CRS reprojection."
     )
     
     # Base paths
